@@ -11,7 +11,7 @@ import com.huiyadan.pcr.tool.ScoreCalculator;
 import java.util.List;
 
 /**
- * @author lihh
+ * @author huiyadanli
  */
 public class BeanTransform {
 

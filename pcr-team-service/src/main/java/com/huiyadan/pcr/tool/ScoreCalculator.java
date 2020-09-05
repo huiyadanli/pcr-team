@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 /**
  * 根据伤害和boss周目计算积分
  *
- * @author lihh
+ * @author huiyadanli
  */
 public class ScoreCalculator {
 

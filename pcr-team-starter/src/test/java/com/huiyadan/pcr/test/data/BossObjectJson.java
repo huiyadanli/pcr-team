@@ -7,7 +7,7 @@ import com.huiyadan.pcr.tool.boss.AllStages;
 import com.huiyadan.pcr.tool.boss.StageBossInfo;
 
 /**
- * @author lihh
+ * @author huiyadanli
  */
 public class BossObjectJson {
 

@@ -5,7 +5,7 @@ import org.apache.commons.lang3.time.FastDateFormat;
 /**
  * 时间戳工具类
  *
- * @author lihh
+ * @author huiyadanli
  */
 public class TimestampUtils {
 

@@ -5,7 +5,7 @@ import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.event.Events;
 
 /**
- * @author lihh
+ * @author huiyadanli
  */
 @Slf4j
 public class BotThread extends Thread {

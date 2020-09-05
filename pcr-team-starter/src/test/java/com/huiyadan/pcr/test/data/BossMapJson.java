@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author lihh
+ * @author huiyadanli
  */
 public class BossMapJson {
 
