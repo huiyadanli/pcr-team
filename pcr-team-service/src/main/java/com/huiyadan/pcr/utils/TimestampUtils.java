@@ -15,10 +15,25 @@ public class TimestampUtils {
     }
 
     public static String toDateStr(Integer time) {
-        return FastDateFormat.getInstance("yyyy-MM-dd").format(time * 1000);
+        if (time == null) {
+            return null;
+        }
+        return FastDateFormat.getInstance("yyyy-MM-dd").format((long) time * 1000);
     }
 
     public static String toDatetimeStr(Integer time) {
-        return FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(time * 1000);
+        if (time == null) {
+            return null;
+        }
+        return FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format((long) time * 1000);
+    }
+
+    /**
+     * test case
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        System.out.println(toDatetimeStr(1598274559));
     }
 }
