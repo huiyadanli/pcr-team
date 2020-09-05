@@ -5,6 +5,7 @@
     <!--
       WARNING - @mbg.generated
     -->
+    <result column="stage" property="stage" jdbcType="INTEGER" />
     <result column="game_id" property="gameId" jdbcType="VARCHAR" />
     <result column="game_nickname" property="gameNickname" jdbcType="VARCHAR" />
     <result column="qq" property="qq" jdbcType="VARCHAR" />
