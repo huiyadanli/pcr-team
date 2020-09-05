@@ -49,7 +49,9 @@ public class NotifyAttackInfoTask {
             if (CollectionUtils.isNotEmpty(list)) {
                 list = list.stream().sorted(Comparator.comparing(DamageEntity::getAttackTime)).collect(Collectors.toList());
                 for (DamageEntity damageEntity : list) {
-                    sendDamageMessage(damageEntity);
+                    Integer remainHp = dayReportService.getBossRemainHp(damageEntity);
+                    sendDamageMessage(damageEntity, remainHp);
+                    Thread.sleep(1000);
                 }
             } else {
                 log.info("自动报刀定时任务: 无新增数据");
@@ -59,14 +61,23 @@ public class NotifyAttackInfoTask {
         }
     }
 
-    private void sendDamageMessage(DamageEntity damage) {
+    private void sendDamageMessage(DamageEntity damage, Integer remainHp) {
         Map<String, Object> map = new HashMap<>();
-        map.put("attackTime", TimestampUtils.toDatetimeStr(damage.getAttackTime()));
+        map.put("attackTime", TimestampUtils.toTimeStr("HH:mm:ss", damage.getAttackTime()));
         map.put("gameNickname", damage.getGameNickname());
+        map.put("lapNum", damage.getLapNum());
         map.put("bossNum", damage.getBossNum());
         map.put("bossName", damage.getBossName());
         map.put("damage", damage.getDamage());
-        StringSubstitutor ss = new StringSubstitutor(map);
-        bot.getGroup(qqGroupId).sendMessage(ss.replace(msgTemplate));
+        map.put("remainHp", remainHp);
+        if (remainHp == 0) {
+            map.put("bossStateTip", "已被击败】");
+        } else {
+            map.put("bossStateTip", "剩余血量】：" + remainHp);
+        }
+        StringSubstitutor ss = new StringSubstitutor(map, "{", "}");
+        String msg = ss.replace(msgTemplate);
+        log.info("发送消息：{}", msg);
+        bot.getGroup(qqGroupId).sendMessage(msg);
     }
 }

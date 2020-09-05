@@ -15,19 +15,16 @@ pcr:
   battle-start-date: 2020-08-24  # ！会战开始时间
   battle-days: 6 # 会战持续时间(天)
   boss-info: '{"stages":[{"stage":5,"bossNames":["双足飞龙","野性狮鹫","雷电","狂乱魔熊","炎吼狮王"]}]}'
-  boss-hp:
-    boss1: 6000000
-    boss2: 8000000
-    boss3: 10000000
-    boss4: 12000000
-    boss5: 20000000
 
 # 定时任务配置
 task:
   # 自动报刀
   notify:
     cron: 0 1/1 * * * ? # 01分开始,5分钟执行一次   0 1/5 * * * ?
-    msg: '测试消息请忽略！${attackTime} ${gameNickname} 对${bossNum}王 ${bossName} 造成了 ${damage} 伤害 \n\r 当前周目 ${lapNum}'
+    msg: |+
+      【时间】：{attackTime}
+      【{gameNickname}】对【{bossName}】造成了【{damage}】伤害！
+      【{lapNum} 周目 {bossNum} 王{bossStateTip}
   # 自动催刀
   urge:
     cron: 0 10 22,23,0 * * ? # 22、23、24点   0 10 22,23,0 * * ?

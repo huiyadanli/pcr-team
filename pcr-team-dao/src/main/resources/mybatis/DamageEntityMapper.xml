@@ -19,10 +19,19 @@
         <result column="attack_time" property="attackTime" jdbcType="INTEGER"/>
         <result column="create_time" property="createTime" jdbcType="INTEGER"/>
     </resultMap>
+
     <delete id="truncate">
       delete from damage
     </delete>
+
     <delete id="deleteByStage">
-     delete from damage where stage = #{stage}
-  </delete>
+      delete from damage where stage = #{stage}
+    </delete>
+
+    <select id="sumDamage" resultType="java.lang.Integer">
+        select sum(damage) from damage
+        where lap_num = #{lapNum}
+        and boss_num = #{bossNum}
+        and attack_time &lt;= #{attackTime}
+    </select>
 </mapper>

@@ -4,6 +4,7 @@ import com.huiyadan.pcr.api.bigfun.day.DayReportFetcher;
 import com.huiyadan.pcr.api.bigfun.day.model.Member;
 import com.huiyadan.pcr.dao.mapper.DamageEntityMapper;
 import com.huiyadan.pcr.dao.model.DamageEntity;
+import com.huiyadan.pcr.tool.BossInfo;
 import com.huiyadan.pcr.utils.BeanTransform;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
@@ -46,6 +47,17 @@ public class DayReportService {
 
     @Value("${pcr.battle-days:6}")
     private Integer days;
+
+    public Integer getBossRemainHp(DamageEntity damageEntity) {
+        Integer sumDamage = damageEntityMapper.sumDamage(damageEntity);
+        Integer bossHp = BossInfo.getHp(damageEntity.getStage(), damageEntity.getBossNum());
+        if (sumDamage != null && bossHp != null) {
+            return bossHp - sumDamage;
+        } else {
+            log.warn("boss 剩余血量计算失败: {} - {}", bossHp, sumDamage);
+            return -9527;
+        }
+    }
 
     /**
      * 拉取当日所有数据

@@ -28,6 +28,13 @@ public class TimestampUtils {
         return FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format((long) time * 1000);
     }
 
+    public static String toTimeStr(String pattern, Integer time) {
+        if (time == null) {
+            return null;
+        }
+        return FastDateFormat.getInstance(pattern).format((long) time * 1000);
+    }
+
     /**
      * test case
      *

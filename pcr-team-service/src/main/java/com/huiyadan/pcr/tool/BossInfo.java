@@ -2,6 +2,7 @@ package com.huiyadan.pcr.tool;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.ImmutableBiMap;
 import com.huiyadan.pcr.tool.boss.AllStages;
 import com.huiyadan.pcr.tool.boss.StageBossInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.Map;
 
 /**
  * @author huiyadanli
@@ -18,6 +20,13 @@ import javax.annotation.PostConstruct;
 public class BossInfo {
 
     private static AllStages all;
+
+    private static Map<Integer, Integer> defaultHp = ImmutableBiMap.of(
+            1, 6000000,
+            2, 8000000,
+            3, 10000000,
+            4, 12000000,
+            5, 20000000);
 
     @Value("${pcr.boss-info}")
     private String bossInfoJson;
@@ -31,6 +40,13 @@ public class BossInfo {
         }
     }
 
+    /**
+     * 获取 boss 编号
+     *
+     * @param stage    第几期
+     * @param bossName boss 名称
+     * @return
+     */
     public static Integer getIndex(Integer stage, String bossName) {
         for (StageBossInfo stageBossInfo : all.getStages()) {
             if (stageBossInfo.getStage().intValue() == stage.intValue()) {
@@ -44,4 +60,45 @@ public class BossInfo {
         return null;
     }
 
+    /**
+     * 通名称获取 boss 血量
+     *
+     * @param stage    第几期
+     * @param bossName boss 名称
+     * @return
+     */
+    public static Integer getHp(Integer stage, String bossName) {
+        Integer bossNum = getIndex(stage, bossName);
+        return getHp(stage, bossNum);
+    }
+
+    /**
+     * 通过编号获取 boss 血量
+     *
+     * @param stage   第几期
+     * @param bossNum boss 编号
+     * @return
+     */
+    public static Integer getHp(Integer stage, Integer bossNum) {
+        for (StageBossInfo stageBossInfo : all.getStages()) {
+            if (stageBossInfo.getStage().intValue() == stage.intValue()) {
+                if (stageBossInfo.getBossHps() == null) {
+                    return getDefaultHp(bossNum);
+                } else {
+                    return stageBossInfo.getBossHps().get(bossNum - 1);
+                }
+            }
+        }
+        return getDefaultHp(bossNum);
+    }
+
+    /**
+     * 通过编号获取默认 boss 血量
+     *
+     * @param bossNum boss 编号
+     * @return
+     */
+    public static Integer getDefaultHp(Integer bossNum) {
+        return defaultHp.get(bossNum);
+    }
 }
