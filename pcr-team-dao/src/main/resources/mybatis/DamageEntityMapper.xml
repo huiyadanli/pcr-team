@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huiyadan.pcr.dao.mapper.DamageEntityMapper">
+    <resultMap id="BaseResultMap" type="com.huiyadan.pcr.dao.model.DamageEntity">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <result column="stage" property="stage" jdbcType="INTEGER"/>
+        <result column="date" property="date" jdbcType="VARCHAR"/>
+        <result column="lap_num" property="lapNum" jdbcType="INTEGER"/>
+        <result column="game_id" property="gameId" jdbcType="VARCHAR"/>
+        <result column="game_nickname" property="gameNickname" jdbcType="VARCHAR"/>
+        <result column="boss_num" property="bossNum" jdbcType="INTEGER"/>
+        <result column="boss_name" property="bossName" jdbcType="VARCHAR"/>
+        <result column="damage" property="damage" jdbcType="INTEGER"/>
+        <result column="score" property="score" jdbcType="INTEGER"/>
+        <result column="killed" property="killed" jdbcType="INTEGER"/>
+        <result column="reimburse" property="reimburse" jdbcType="INTEGER"/>
+        <result column="attack_time" property="attackTime" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="INTEGER"/>
+    </resultMap>
+    <delete id="truncate">
+      delete from damage
+    </delete>
+    <delete id="deleteByStage">
+     delete from damage where stage = #{stage}
+  </delete>
+</mapper>

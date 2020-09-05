@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huiyadan.pcr.dao.mapper.MemberHistoryEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.huiyadan.pcr.dao.model.MemberHistoryEntity" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="stage" property="stage" jdbcType="INTEGER" />
+    <result column="game_id" property="gameId" jdbcType="VARCHAR" />
+    <result column="game_nickname" property="gameNickname" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+  </resultMap>
+</mapper>

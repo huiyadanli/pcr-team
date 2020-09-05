@@ -1,0 +1,33 @@
+# mybatis
+spring:
+  datasource:
+    driver-class-name: org.sqlite.JDBC
+    url: jdbc:sqlite:E:\Programing\Mine3\pcr\pcr-team\db\data
+    username:
+    password:
+
+mybatis:
+  mapper-locations: classpath:mybatis/*xml
+
+# 游戏相关配置
+pcr:
+  battle-stage: 5 # 第几期会战
+  battle-start-date: 2020-08-24  # ！会战开始时间
+  battle-days: 6 # 会战持续时间(天)
+  boss-info: '{"stages":[{"stage":5,"bossNames":["双足飞龙","野性狮鹫","雷电","狂乱魔熊","炎吼狮王"]}]}'
+  boss-hp:
+    boss1: 6000000
+    boss2: 8000000
+    boss3: 10000000
+    boss4: 12000000
+    boss5: 20000000
+
+# 定时任务配置
+task:
+  # 自动报刀
+  notify:
+    cron: 0 1/1 * * * ? # 01分开始,5分钟执行一次   0 1/5 * * * ?
+    msg: '测试消息请忽略！{0} {1} 对{2}王 {3} 造成了 {4} 伤害\n当前周目 {5}'
+  # 自动催刀
+  urge:
+    cron: 0 10 22,23,0 * * ? # 22、23、24点   0 10 22,23,0 * * ?
