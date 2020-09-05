@@ -8,16 +8,13 @@ import lombok.extern.slf4j.Slf4j;
 import net.mamoe.mirai.Bot;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.apache.commons.text.StringSubstitutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.text.MessageFormat;
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -63,12 +60,13 @@ public class NotifyAttackInfoTask {
     }
 
     private void sendDamageMessage(DamageEntity damage) {
-        String msg = MessageFormat.format(msgTemplate,
-                TimestampUtils.toDatetimeStr(damage.getAttackTime()),
-                damage.getGameNickname(),
-                damage.getBossNum(),
-                damage.getBossName(),
-                damage.getDamage());
-        bot.getGroup(qqGroupId).sendMessage(msg);
+        Map<String, Object> map = new HashMap<>();
+        map.put("attackTime", TimestampUtils.toDatetimeStr(damage.getAttackTime()));
+        map.put("gameNickname", damage.getGameNickname());
+        map.put("bossNum", damage.getBossNum());
+        map.put("bossName", damage.getBossName());
+        map.put("damage", damage.getDamage());
+        StringSubstitutor ss = new StringSubstitutor(map);
+        bot.getGroup(qqGroupId).sendMessage(ss.replace(msgTemplate));
     }
 }

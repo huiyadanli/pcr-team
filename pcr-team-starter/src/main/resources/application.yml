@@ -27,7 +27,7 @@ task:
   # 自动报刀
   notify:
     cron: 0 1/1 * * * ? # 01分开始,5分钟执行一次   0 1/5 * * * ?
-    msg: '测试消息请忽略！{0} {1} 对{2}王 {3} 造成了 {4} 伤害\n当前周目 {5}'
+    msg: '测试消息请忽略！${attackTime} ${gameNickname} 对${bossNum}王 ${bossName} 造成了 ${damage} 伤害 \n\r 当前周目 ${lapNum}'
   # 自动催刀
   urge:
     cron: 0 10 22,23,0 * * ? # 22、23、24点   0 10 22,23,0 * * ?
