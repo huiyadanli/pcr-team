@@ -6,6 +6,7 @@ import net.mamoe.mirai.event.ListeningStatus;
 import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.message.GroupMessageEvent;
 import net.mamoe.mirai.message.data.QuoteReply;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -37,7 +38,7 @@ public class BotListener extends SimpleListenerHost {
 
     //处理在处理事件中发生的未捕获异常
     @Override
-    public void handleException(CoroutineContext context, Throwable exception) {
+    public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
         throw new RuntimeException("在事件处理中发生异常", exception);
     }
 }
