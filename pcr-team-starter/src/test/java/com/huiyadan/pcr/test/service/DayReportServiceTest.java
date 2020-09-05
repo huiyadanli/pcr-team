@@ -1,8 +1,9 @@
-package com.huiyadan.pcr.service;
+package com.huiyadan.pcr.test.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.huiyadan.pcr.dao.model.DamageEntity;
+import com.huiyadan.pcr.service.DayReportService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Test;
