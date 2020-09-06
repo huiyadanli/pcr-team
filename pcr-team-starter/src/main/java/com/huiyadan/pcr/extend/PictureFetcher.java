@@ -3,6 +3,7 @@ package com.huiyadan.pcr.extend;
 import lombok.extern.slf4j.Slf4j;
 import net.dongliu.requests.Requests;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -61,6 +62,6 @@ public class PictureFetcher {
 
 
     private String randomApi() {
-        return apis[(int) (Math.random() * apis.length)];
+        return apis[RandomUtils.nextInt(0, apis.length)];
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.util.regex.Pattern;
 
 /**
  * 机器人消息监听
@@ -45,7 +46,7 @@ public class BotListener extends SimpleListenerHost {
                 final QuoteReply quote = new QuoteReply(event.getSource());
                 event.getGroup().sendMessage(quote.plus("引用回复"));
 
-            } else if (msgString.contains("来点图片")) {
+            } else if (Pattern.matches("不够[涩瑟色]|[涩瑟色]图|来一?[点份张].*[涩瑟色]|再来[点份张]|看过了|铜", msgString)) {
                 File file = null;
                 try {
                     file = pictureFetcher.getImageFile();

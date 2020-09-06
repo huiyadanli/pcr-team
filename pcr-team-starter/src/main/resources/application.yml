@@ -36,5 +36,5 @@ extend:
     apis: >
       https://api.dongmanxingkong.com/suijitupian/acg/1080p/index.php,
       http://www.dmoe.cc/random.php,
-      https://api.ixiaowai.cn/api/api.php,
-      https://api.mmcee.cn/acgimg/acgurl.php
+      https://api.ixiaowai.cn/api/api.php
+#      https://api.mmcee.cn/acgimg/acgurl.php
