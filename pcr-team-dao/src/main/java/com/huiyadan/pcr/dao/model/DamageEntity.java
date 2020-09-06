@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Getter
 @Setter
@@ -89,4 +90,16 @@ public class DamageEntity {
      */
     @Column(name = "create_time")
     private Integer createTime;
+
+    /**
+     * boss剩余血量
+     */
+    @Transient
+    private Integer remainHp;
+
+    /**
+     * 当前出刀数
+     */
+    @Transient
+    private Integer attackNum;
 }

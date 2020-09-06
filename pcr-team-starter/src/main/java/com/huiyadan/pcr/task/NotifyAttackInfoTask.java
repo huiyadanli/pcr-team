@@ -44,13 +44,14 @@ public class NotifyAttackInfoTask {
             ObjectMapper mapper = new ObjectMapper();
             // 获取当天日期
             Date today = DateUtils.truncate(new Date(), Calendar.DAY_OF_MONTH);
-            // DateUtils.parseDate("2020-08-29","yyyy-MM-dd")
+            // DateUtils.parseDate("2020-08-29","yyyy-MM-dd")  // test code
             List<DamageEntity> list = dayReportService.add(DateUtils.parseDate("2020-08-29", "yyyy-MM-dd"));
             if (CollectionUtils.isNotEmpty(list)) {
                 list = list.stream().sorted(Comparator.comparing(DamageEntity::getAttackTime)).collect(Collectors.toList());
                 for (DamageEntity damageEntity : list) {
-                    Integer remainHp = dayReportService.getBossRemainHp(damageEntity);
-                    sendDamageMessage(damageEntity, remainHp);
+                    dayReportService.getBossRemainHp(damageEntity); // 获取boss剩余血量
+                    dayReportService.getAttackNum(damageEntity); // 获取出刀数量
+                    sendDamageMessage(damageEntity);
                     Thread.sleep(1000);
                 }
             } else {
@@ -61,7 +62,14 @@ public class NotifyAttackInfoTask {
         }
     }
 
-    private void sendDamageMessage(DamageEntity damage, Integer remainHp) {
+    private void sendDamageMessage(DamageEntity damage) {
+        String msg = buildMessage(damage);
+        log.info("发送消息：{}", msg);
+        bot.getGroup(qqGroupId).sendMessage(msg);
+//        bot.getFriend().sendMessage(msg);  //test code
+    }
+
+    private String buildMessage(DamageEntity damage) {
         Map<String, Object> map = new HashMap<>();
         map.put("attackTime", TimestampUtils.toTimeStr("HH:mm:ss", damage.getAttackTime()));
         map.put("gameNickname", damage.getGameNickname());
@@ -69,15 +77,18 @@ public class NotifyAttackInfoTask {
         map.put("bossNum", damage.getBossNum());
         map.put("bossName", damage.getBossName());
         map.put("damage", damage.getDamage());
+        map.put("attackNum", damage.getAttackNum());
+
+        Integer remainHp = damage.getRemainHp();
         map.put("remainHp", remainHp);
         if (remainHp == 0) {
-            map.put("bossStateTip", "已被击败】");
+            map.put("bossStateTip", "已被击败！");
         } else {
-            map.put("bossStateTip", "剩余血量】：" + remainHp);
+            map.put("bossStateTip", "剩余血量：" + remainHp);
         }
+
+        map.put("isReimburse", damage.getReimburse() == 1 ? "，补偿刀" : "");
         StringSubstitutor ss = new StringSubstitutor(map, "{", "}");
-        String msg = ss.replace(msgTemplate);
-        log.info("发送消息：{}", msg);
-        bot.getGroup(qqGroupId).sendMessage(msg);
+        return ss.replace(msgTemplate);
     }
 }

@@ -11,4 +11,6 @@ public interface DamageEntityMapper extends Mapper<DamageEntity> {
     int deleteByStage(@Value("stage") Integer stage);
 
     Integer sumDamage(DamageEntity entity);
+
+    Integer countAttackNum(DamageEntity entity);
 }

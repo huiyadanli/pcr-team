@@ -48,11 +48,47 @@ public class DayReportService {
     @Value("${pcr.battle-days:6}")
     private Integer days;
 
+    /**
+     * 计算当前第几刀
+     *
+     * @param damageEntity
+     * @return
+     */
+    public Integer getAttackNum(DamageEntity damageEntity) {
+        // 获取当前成员今日所有出刀数据
+        List<DamageEntity> list = damageEntityMapper.selectByExample(new Example.Builder(DamageEntity.class)
+                .where(WeekendSqls.<DamageEntity>custom()
+                        .andEqualTo(DamageEntity::getStage, damageEntity.getStage())
+                        .andEqualTo(DamageEntity::getDate, damageEntity.getDate())
+                        .andEqualTo(DamageEntity::getGameNickname, damageEntity.getGameNickname()))
+                .orderByAsc("attackTime")
+                .build());
+        // 计算出刀数
+        int i = 0;
+        for (DamageEntity entity : list) {
+            if (entity.getReimburse() == 0) {
+                i++;
+            }
+            if (compareDamageEntity(entity, damageEntity)) {
+                break;
+            }
+        }
+        damageEntity.setAttackNum(i);
+        return i;
+    }
+
+    /**
+     * 计算 boss 剩余血量
+     *
+     * @param damageEntity
+     * @return
+     */
     public Integer getBossRemainHp(DamageEntity damageEntity) {
         Integer sumDamage = damageEntityMapper.sumDamage(damageEntity);
         Integer bossHp = BossInfo.getHp(damageEntity.getStage(), damageEntity.getBossNum());
         if (sumDamage != null && bossHp != null) {
-            return bossHp - sumDamage;
+            damageEntity.setRemainHp(bossHp - sumDamage);
+            return damageEntity.getRemainHp();
         } else {
             log.warn("boss 剩余血量计算失败: {} - {}", bossHp, sumDamage);
             return -9527;

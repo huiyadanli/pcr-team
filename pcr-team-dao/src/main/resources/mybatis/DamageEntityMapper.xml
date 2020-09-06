@@ -34,4 +34,11 @@
         and boss_num = #{bossNum}
         and attack_time &lt;= #{attackTime}
     </select>
+
+    <select id="countAttackNum" resultType="java.lang.Integer">
+        SELECT
+        (SELECT count(1) FROM damage WHERE date = #{date} and game_nickname =#{gameNickname})
+        -
+        (SELECT count(1) FROM damage WHERE date = #{date} and game_nickname =#{gameNickname} and reimburse = 1)
+    </select>
 </mapper>
