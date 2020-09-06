@@ -20,10 +20,21 @@ pcr:
 task:
   # 自动报刀
   notify:
-    cron: 0 1/1 * * * ? # 01分开始,5分钟执行一次   0 1/5 * * * ?
+    cron: 0 1/50 * * * ? # 01分开始,5分钟执行一次   0 1/5 * * * ?
     msg: |+
       【{gameNickname}】对【{bossName}】造成了【{damage}】伤害！
       {attackTime}：当前第{attackNum}刀{isReimburse}，{lapNum}周目{bossNum}王{bossStateTip}
   # 自动催刀
   urge:
     cron: 0 10 22,23,0 * * ? # 22、23、24点   0 10 22,23,0 * * ?
+
+
+# 动漫图片 api
+extend:
+  picture:
+    path: /image/
+    apis: >
+      https://api.dongmanxingkong.com/suijitupian/acg/1080p/index.php,
+      http://www.dmoe.cc/random.php,
+      https://api.ixiaowai.cn/api/api.php,
+      https://api.mmcee.cn/acgimg/acgurl.php
