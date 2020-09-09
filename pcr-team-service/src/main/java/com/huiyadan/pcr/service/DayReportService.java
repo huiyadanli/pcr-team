@@ -18,10 +18,7 @@ import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.weekend.WeekendSqls;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -47,6 +44,35 @@ public class DayReportService {
 
     @Value("${pcr.battle-days:6}")
     private Integer days;
+
+
+    /**
+     * 从数据库获取所有成员出刀数
+     * @param dateStr
+     * @return
+     */
+    public Map<String, Double> getAllMerberAttackNum(String dateStr) {
+        // 获取今日所有出刀数据
+        List<DamageEntity> list = damageEntityMapper.selectByExample(new Example.Builder(DamageEntity.class)
+                .where(WeekendSqls.<DamageEntity>custom()
+                        .andEqualTo(DamageEntity::getStage, stage)
+                        .andEqualTo(DamageEntity::getDate, dateStr))
+                .build());
+        // 计算出刀数 尾刀和补偿刀算 0.5
+        Map<String, Double> map = new HashMap<>();
+        for (DamageEntity entity : list) {
+            double cnt = 1;
+            if (entity.getReimburse() == 1 || entity.getKilled() == 1) {
+                cnt = 0.5;
+            }
+            if (map.containsKey(entity.getGameNickname())) {
+                map.put(entity.getGameNickname(), map.get(entity.getGameNickname()) + cnt);
+            } else {
+                map.put(entity.getGameNickname(), cnt);
+            }
+        }
+        return map;
+    }
 
     /**
      * 计算当前第几刀
