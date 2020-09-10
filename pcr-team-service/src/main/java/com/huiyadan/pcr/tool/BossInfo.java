@@ -21,6 +21,9 @@ public class BossInfo {
 
     private static AllStages all;
 
+    /**
+     * 默认 boss 血量
+     */
     private static Map<Integer, Integer> defaultHp = ImmutableBiMap.of(
             1, 6000000,
             2, 8000000,
@@ -31,6 +34,9 @@ public class BossInfo {
     @Value("${pcr.boss-info}")
     private String bossInfoJson;
 
+    /**
+     * 解析配置文件中的 json 配置
+     */
     @PostConstruct
     public void init() {
         try {

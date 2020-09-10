@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * json 解析对象
  * @author huiyadanli
  */
 @Getter
