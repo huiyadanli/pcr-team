@@ -22,6 +22,7 @@ pcr:
   battle-start-date: 2020-08-24  # ！会战开始时间
   battle-days: 6 # 会战持续时间(天)
   boss-info: '{"stages":[{"stage":5,"bossNames":["双足飞龙","野性狮鹫","雷电","狂乱魔熊","炎吼狮王"]}]}'
+  member-info-path: E:\Programing\Mine3\pcr\pcr-team\db\members.mine.csv
 
 # 定时任务配置
 task:

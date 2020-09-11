@@ -1,6 +1,7 @@
 package com.huiyadan.pcr.task;
 
 import com.huiyadan.pcr.service.DayReportService;
+import com.huiyadan.pcr.tool.GuildMemberInfo;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.contact.ContactList;
 import net.mamoe.mirai.contact.Member;
@@ -49,8 +50,9 @@ public class UrgeAttackTask {
             ContactList<Member> groupMembers = bot.getGroup(qqGroupId).getMembers(); // 获取所有群成员
             MessageChain chain = MessageUtils.newChain("当前未出刀情况：\n");
             for (Map.Entry<String, Double> entry : map.entrySet()) {
-                // TODO 游戏昵称与QQ号的映射
-                chain.plus(new At(groupMembers.get(111111))).plus(attackStatusMsg(3 - entry.getValue()));
+                // 游戏昵称与QQ号的映射 GuildMemberInfo.getQQByGameNickname
+                chain.plus(new At(groupMembers.get(GuildMemberInfo.getQQByGameNickname(entry.getKey()))))
+                        .plus(attackStatusMsg(3 - entry.getValue()));
             }
             bot.getGroup(qqGroupId).sendMessage(chain);
         }
