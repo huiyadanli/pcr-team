@@ -2,7 +2,7 @@
 spring:
   datasource:
     driver-class-name: org.sqlite.JDBC
-    url: jdbc:sqlite:E:\Programing\Mine3\pcr\pcr-team\db\data
+    url: jdbc:sqlite:E:\Programing\Mine3\pcr\pcr-team\db\data.mine.db
     username:
     password:
 

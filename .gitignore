@@ -36,7 +36,7 @@ build/
 **/secrets.mine.yml
 **/deviceInfo.json
 
-db/data
+db/data.mine.db
 db/members.mine.csv
 **/deviceInfo.json
 **/secrets.mine.yml
