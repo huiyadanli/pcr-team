@@ -1,6 +1,6 @@
 package com.huiyadan.pcr.bot;
 
-import com.huiyadan.pcr.extend.PictureFetcher;
+import com.huiyadan.pcr.api.image.PictureFetcher;
 import kotlin.coroutines.CoroutineContext;
 import lombok.extern.slf4j.Slf4j;
 import net.mamoe.mirai.event.EventHandler;

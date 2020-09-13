@@ -1,6 +1,6 @@
 package com.huiyadan.pcr.api.bigfun;
 
-import com.huiyadan.pcr.utils.HttpUtils;
+import com.huiyadan.pcr.api.utils.HttpUtils;
 import lombok.Getter;
 import lombok.Setter;
 import net.dongliu.requests.Requests;

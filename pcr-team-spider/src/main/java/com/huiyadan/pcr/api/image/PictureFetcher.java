@@ -1,4 +1,4 @@
-package com.huiyadan.pcr.extend;
+package com.huiyadan.pcr.api.image;
 
 import lombok.extern.slf4j.Slf4j;
 import net.dongliu.requests.Requests;

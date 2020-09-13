@@ -9,16 +9,17 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>pcr-team-service</artifactId>
+    <artifactId>pcr-team-spider</artifactId>
 
     <dependencies>
+        <!-- http类库 有点类似于python的requests https://github.com/hsiafan/requests -->
         <dependency>
-            <artifactId>pcr-team-dao</artifactId>
-            <groupId>com.huiyadan.pcr</groupId>
-            <version>${project.version}</version>
+            <groupId>net.dongliu</groupId>
+            <artifactId>requests</artifactId>
+            <version>5.0.8</version>
         </dependency>
         <dependency>
-            <artifactId>pcr-team-spider</artifactId>
+            <artifactId>pcr-team-dao</artifactId>
             <groupId>com.huiyadan.pcr</groupId>
             <version>${project.version}</version>
         </dependency>

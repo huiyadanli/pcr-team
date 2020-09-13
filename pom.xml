@@ -8,6 +8,7 @@
         <module>pcr-team-service</module>
         <module>pcr-team-starter</module>
         <module>pcr-team-analysis</module>
+        <module>pcr-team-spider</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
