@@ -45,7 +45,7 @@ public class NotifyAttackInfoTask {
             // 获取当天日期
             Date today = DateUtils.truncate(new Date(), Calendar.DAY_OF_MONTH);
             // DateUtils.parseDate("2020-08-29","yyyy-MM-dd")  // test code
-            List<DamageEntity> list = dayReportService.add(DateUtils.parseDate("2020-08-29", "yyyy-MM-dd"));
+            List<DamageEntity> list = dayReportService.add(today);
             if (CollectionUtils.isNotEmpty(list)) {
                 list = list.stream().sorted(Comparator.comparing(DamageEntity::getAttackTime)).collect(Collectors.toList());
                 for (DamageEntity damageEntity : list) {
