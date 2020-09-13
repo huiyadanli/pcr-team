@@ -27,16 +27,17 @@
         <javaModelGenerator targetPackage="com.huiyadan.pcr.dao.model" targetProject="src/main/java"/>
 
         <!-- 配置mapper.xml的生成目录和输出路径， 如mybatis.mapper.matrix 代表将生成的mapper.xml-->
-        <sqlMapGenerator targetPackage="mybatis.team" targetProject="src/main/resources"/>
+        <sqlMapGenerator targetPackage="mybatis" targetProject="src/main/resources"/>
 
         <!-- 配置mapper.java的包名和输出路径-->
         <javaClientGenerator targetPackage="com.huiyadan.pcr.dao.mapper" targetProject="src/main/java"
                              type="XMLMAPPER"/>
 
         <!-- 配置需要自动生成mapper的表名， 一个table标签配置一张表，可同时配置个table标签 -->
-        <table tableName="damage" domainObjectName="DamageEntity"/>
+<!--        <table tableName="damage" domainObjectName="DamageEntity"/>
         <table tableName="damage_history" domainObjectName="DamageHistoryEntity"/>
         <table tableName="member" domainObjectName="MemberEntity"/>
-        <table tableName="member_history" domainObjectName="MemberHistoryEntity"/>
+        <table tableName="member_history" domainObjectName="MemberHistoryEntity"/>-->
+        <table tableName="nicknames" domainObjectName="NicknamesEntity"/>
     </context>
 </generatorConfiguration>

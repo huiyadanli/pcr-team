@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huiyadan.pcr.dao.mapper.NicknamesEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.huiyadan.pcr.dao.model.NicknamesEntity" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="jp_name" property="jpName" jdbcType="VARCHAR" />
+    <result column="cn_name" property="cnName" jdbcType="VARCHAR" />
+    <result column="nicknames" property="nicknames" jdbcType="VARCHAR" />
+  </resultMap>
+</mapper>
