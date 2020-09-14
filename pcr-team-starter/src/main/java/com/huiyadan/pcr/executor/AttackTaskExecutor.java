@@ -69,8 +69,13 @@ public class AttackTaskExecutor {
             MessageChain chain = MessageUtils.newChain("当前未出刀情况：\n");
             for (Map.Entry<String, Double> entry : map.entrySet()) {
                 // 游戏昵称与QQ号的映射 GuildMemberInfo.getQQByGameNickname
-                chain.plus(new At(groupMembers.get(GuildMemberInfo.getQQByGameNickname(entry.getKey()))))
-                        .plus(attackStatusMsg(3 - entry.getValue()));
+                Long qqId = GuildMemberInfo.getQQByGameNickname(entry.getKey());
+                if (qqId != null) {
+                    chain.plus(new At(groupMembers.get(qqId))).plus(attackStatusMsg(3 - entry.getValue()));
+                } else {
+                    chain.plus(entry.getKey() + " ").plus(attackStatusMsg(3 - entry.getValue()));
+                }
+
             }
             if (group == null) {
                 bot.getGroup(qqGroupId).sendMessage(chain);
