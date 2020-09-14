@@ -21,6 +21,11 @@ public class BossObjectJson {
         s5.setBossNames(Lists.newArrayList("双足飞龙", "野性狮鹫", "雷电", "狂乱魔熊", "炎吼狮王"));
         all.getStages().add(s5);
 
+        StageBossInfo s6 = new StageBossInfo();
+        s6.setStage(6);
+        s6.setBossNames(Lists.newArrayList("双足飞龙", "野性狮鹫", "独眼巨人", "幽灵领主", "美杜莎"));
+        all.getStages().add(s6);
+
     }
 
     public static void main(String[] args) throws JsonProcessingException {

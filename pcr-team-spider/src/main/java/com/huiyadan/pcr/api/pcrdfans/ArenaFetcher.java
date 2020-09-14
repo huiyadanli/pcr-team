@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import net.dongliu.requests.Requests;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
@@ -17,10 +16,8 @@ import java.util.Map;
  * @author huiyadanli
  */
 @Slf4j
-@Component
+//@Component
 public class ArenaFetcher {
-
-    private static final ArenaFetcher INSTANCE = new ArenaFetcher();
 
     private static final String URL = "https://api.pcrdfans.com/x/v1/search";
 
