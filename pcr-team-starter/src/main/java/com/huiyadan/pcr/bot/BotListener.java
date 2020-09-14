@@ -1,6 +1,7 @@
 package com.huiyadan.pcr.bot;
 
 import com.huiyadan.pcr.api.image.PictureFetcher;
+import com.huiyadan.pcr.executor.AttackTaskExecutor;
 import kotlin.coroutines.CoroutineContext;
 import lombok.extern.slf4j.Slf4j;
 import net.mamoe.mirai.event.EventHandler;
@@ -8,7 +9,6 @@ import net.mamoe.mirai.event.ListeningStatus;
 import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.message.GroupMessageEvent;
 import net.mamoe.mirai.message.data.Image;
-import net.mamoe.mirai.message.data.MessageUtils;
 import net.mamoe.mirai.message.data.QuoteReply;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.util.regex.Pattern;
 
 /**
  * 机器人消息监听
@@ -33,6 +32,9 @@ public class BotListener extends SimpleListenerHost {
     @Autowired
     private PictureFetcher pictureFetcher;
 
+    @Autowired
+    private AttackTaskExecutor attackTaskExecutor;
+
     @EventHandler
     public ListeningStatus onGroupMessage(GroupMessageEvent event) {
         // 只对配置的群生效
@@ -46,7 +48,7 @@ public class BotListener extends SimpleListenerHost {
                 final QuoteReply quote = new QuoteReply(event.getSource());
                 event.getGroup().sendMessage(quote.plus("引用回复"));
 
-            } else if (Pattern.matches("不够[涩瑟色]|[涩瑟色]图|来一?[点份张].*[涩瑟色]|再来[点份张]|看过了|铜", msgString)) {
+            } else if (msgString.contains("随机图片")) {
                 File file = null;
                 try {
                     file = pictureFetcher.getImageFile();
@@ -55,12 +57,15 @@ public class BotListener extends SimpleListenerHost {
                     event.getGroup().sendMessage("图片下载失败！");
                 }
                 if (file != null) {
-                    final Image image = event.getGroup().uploadImage(file);
-                    // 上传一个图片并得到 Image 类型的 Message
-                    final String imageId = image.getImageId(); // 可以拿到 ID
-                    final Image fromId = MessageUtils.newImage(imageId); // ID 转换得到 Image
+                    final Image image = event.getGroup().uploadImage(file); // 上传一个图片并得到 Image 类型的 Message
                     event.getGroup().sendMessage(image); // 发送图片
                 }
+            } else if (msgString.equals("状态")) {
+                attackTaskExecutor.printBossStatus(event.getGroup());
+            } else if (msgString.contains("出刀情况")) {
+                attackTaskExecutor.printAttackNumStatus(event.getGroup());
+            } else if (msgString.equals("催刀")) {
+                attackTaskExecutor.urge(event.getGroup());
             }
         } catch (Exception e) {
             log.error("bot消息处理异常", e);

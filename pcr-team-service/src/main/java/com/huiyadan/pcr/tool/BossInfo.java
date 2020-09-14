@@ -21,6 +21,8 @@ public class BossInfo {
 
     private static AllStages all;
 
+    private static Integer currStage;
+
     /**
      * 默认 boss 血量
      */
@@ -34,6 +36,9 @@ public class BossInfo {
     @Value("${pcr.boss-info}")
     private String bossInfoJson;
 
+    @Value("${pcr.battle-stage}")
+    private Integer battleStage;
+
     /**
      * 解析配置文件中的 json 配置
      */
@@ -41,6 +46,7 @@ public class BossInfo {
     public void init() {
         try {
             all = new ObjectMapper().readValue(bossInfoJson, AllStages.class);
+            currStage = battleStage;
         } catch (JsonProcessingException e) {
             log.error("解析boss信息配置(pcr.boss-info)失败", e);
         }
@@ -66,6 +72,30 @@ public class BossInfo {
         return null;
     }
 
+    public static Integer getIndex(String bossName) {
+        return getIndex(currStage, bossName);
+    }
+
+    /**
+     * 获取 boss 名称
+     *
+     * @param stage   第几期
+     * @param bossNum boss 编号
+     * @return
+     */
+    public static String getBossName(Integer stage, Integer bossNum) {
+        for (StageBossInfo stageBossInfo : all.getStages()) {
+            if (stageBossInfo.getStage().intValue() == stage.intValue()) {
+                return stageBossInfo.getBossNames().get(bossNum - 1);
+            }
+        }
+        return null;
+    }
+
+    public static String getBossName(Integer bossNum) {
+        return getBossName(currStage, bossNum);
+    }
+
     /**
      * 通名称获取 boss 血量
      *
@@ -77,6 +107,15 @@ public class BossInfo {
         Integer bossNum = getIndex(stage, bossName);
         return getHp(stage, bossNum);
     }
+
+    public static Integer getHp(String bossName) {
+        return getHp(currStage, bossName);
+    }
+
+    public static Integer getHp(Integer bossNum) {
+        return getHp(currStage, bossNum);
+    }
+
 
     /**
      * 通过编号获取 boss 血量

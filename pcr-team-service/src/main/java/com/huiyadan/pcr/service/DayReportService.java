@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -45,13 +46,31 @@ public class DayReportService {
     @Value("${pcr.battle-days:6}")
     private Integer days;
 
+    /**
+     * 查询最近一次伤害
+     * @return
+     */
+    public DamageEntity getLatesttDamageEntity() {
+        List<DamageEntity> list = damageEntityMapper.selectByExampleAndRowBounds(new Example.Builder(DamageEntity.class)
+                .where(WeekendSqls.<DamageEntity>custom()
+                        .andEqualTo(DamageEntity::getStage, stage))
+                .orderByDesc("attackTime")
+                .build(), new RowBounds(0, 1));
+        if (list == null || list.size() != 1) {
+            log.error("查询最近一次伤害异常");
+            return null;
+        }
+        return list.get(0);
+    }
+
 
     /**
      * 从数据库获取所有成员出刀数
+     *
      * @param dateStr
-     * @return
+     * @return 游戏昵称-出刀数
      */
-    public Map<String, Double> getAllMerberAttackNum(String dateStr) {
+    public Map<String, Double> getAllMemberAttackNum(String dateStr) {
         // 获取今日所有出刀数据
         List<DamageEntity> list = damageEntityMapper.selectByExample(new Example.Builder(DamageEntity.class)
                 .where(WeekendSqls.<DamageEntity>custom()
