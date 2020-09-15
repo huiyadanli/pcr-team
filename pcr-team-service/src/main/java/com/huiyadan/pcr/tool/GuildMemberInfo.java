@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,10 @@ public class GuildMemberInfo {
 
     public static Long getQQByGameNickname(String nickname) {
         return qqWithNickname.get(nickname);
+    }
+
+    public static List<String> getAllGameNicknames() {
+        return new ArrayList<>(qqWithNickname.keySet());
     }
 
 }

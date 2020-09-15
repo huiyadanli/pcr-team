@@ -21,8 +21,8 @@ import org.springframework.stereotype.Component;
 import java.text.MessageFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * 催刀执行者
@@ -58,22 +58,29 @@ public class AttackTaskExecutor {
         // 获取当天日期
         Date today = DateUtils.truncate(new Date(), Calendar.DAY_OF_MONTH);
         String dateStr = FastDateFormat.getInstance("yyyy-MM-dd").format(today);
+//        dateStr = "2020-08-29"; // test code
         Map<String, Double> map = dayReportService.getAllMemberAttackNum(dateStr);
         // 未出完刀的
-        map = map.entrySet().stream()
-                .filter(entry -> entry.getValue() < 3)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        Map<String, Double> incomplete = new HashMap<>();
+        for (String nickname : GuildMemberInfo.getAllGameNicknames()) {
+            Double d = map.get(nickname);
+            if (d == null) {
+                incomplete.put(nickname, 0.0);
+            } else if (d < 3) {
+                incomplete.put(nickname, d);
+            }
+        }
         // 拼接消息
-        if (map.size() > 0) {
+        if (incomplete.size() > 0) {
             ContactList<Member> groupMembers = bot.getGroup(qqGroupId).getMembers(); // 获取所有群成员
             MessageChain chain = MessageUtils.newChain("当前未出刀情况：\n");
-            for (Map.Entry<String, Double> entry : map.entrySet()) {
+            for (Map.Entry<String, Double> entry : incomplete.entrySet()) {
                 // 游戏昵称与QQ号的映射 GuildMemberInfo.getQQByGameNickname
                 Long qqId = GuildMemberInfo.getQQByGameNickname(entry.getKey());
                 if (qqId != null) {
-                    chain.plus(new At(groupMembers.get(qqId))).plus(attackStatusMsg(3 - entry.getValue()));
+                    chain = chain.plus(new At(groupMembers.get(qqId))).plus(attackStatusMsg(3 - entry.getValue()));
                 } else {
-                    chain.plus(entry.getKey() + " ").plus(attackStatusMsg(3 - entry.getValue()));
+                    chain = chain.plus(entry.getKey() + " ").plus(attackStatusMsg(3 - entry.getValue()));
                 }
 
             }
@@ -107,6 +114,7 @@ public class AttackTaskExecutor {
     public void printAttackNumStatus(Group group) {
         // 获取所有出刀情况
         String dateStr = FastDateFormat.getInstance("yyyy-MM-dd").format(DateUtils.truncate(new Date(), Calendar.DAY_OF_MONTH));
+//        dateStr = "2020-08-29"; // test code
         Map<String, Double> map = dayReportService.getAllMemberAttackNum(dateStr);
         int sum = 0;
         int reimburseNum = 0;
