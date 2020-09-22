@@ -2,6 +2,7 @@ package com.huiyadan.pcr.bot;
 
 import com.huiyadan.pcr.api.image.PictureFetcher;
 import com.huiyadan.pcr.executor.AttackTaskExecutor;
+import com.huiyadan.pcr.task.NotifyAttackInfoTask;
 import kotlin.coroutines.CoroutineContext;
 import lombok.extern.slf4j.Slf4j;
 import net.mamoe.mirai.event.EventHandler;
@@ -35,6 +36,9 @@ public class BotListener extends SimpleListenerHost {
     @Autowired
     private AttackTaskExecutor attackTaskExecutor;
 
+    @Autowired
+    private NotifyAttackInfoTask notifyAttackInfoTask;
+
     @EventHandler
     public ListeningStatus onGroupMessage(GroupMessageEvent event) {
         // 只对配置的群生效
@@ -66,6 +70,8 @@ public class BotListener extends SimpleListenerHost {
                 attackTaskExecutor.printAttackNumStatus(event.getGroup());
             } else if (msgString.equals("催刀")) {
                 attackTaskExecutor.urge(event.getGroup());
+            } else if (msgString.equals("更新出刀数据")) {
+                notifyAttackInfoTask.execute();
             }
         } catch (Exception e) {
             log.error("bot消息处理异常", e);

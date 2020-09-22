@@ -34,8 +34,6 @@ public class DayReportFetcher {
     public List<Member> getByDate(String date) {
         List<Member> members = new ArrayList<>();
 
-        // 多页 上限4页
-//        for (int i = 1; i < 5; i++) {
         try {
             String url = MessageFormat.format(URL, date, 1);
             String resp = BigfunRequests.cookie(cookies).get(url);
@@ -48,7 +46,6 @@ public class DayReportFetcher {
         } catch (Exception e) {
             log.error("从bigfun获取工会日表时异常", e);
         }
-//        }
         return members;
     }
 }
