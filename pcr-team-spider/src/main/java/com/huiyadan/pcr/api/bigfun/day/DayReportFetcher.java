@@ -25,6 +25,9 @@ public class DayReportFetcher {
     @Value("${bigfun.cookies}")
     private String cookies;
 
+    @Value("${bigfun.csrfToken}")
+    private String csrfToken;
+
     private final static String URL = "https://www.bigfun.cn/api/feweb?target=gzlj-clan-day-report%2Fa&date={0}&page={1}&size=30";
 
     /**
@@ -36,7 +39,7 @@ public class DayReportFetcher {
 
         try {
             String url = MessageFormat.format(URL, date, 1);
-            String resp = BigfunRequests.cookie(cookies).get(url);
+            String resp = BigfunRequests.cookie(cookies, csrfToken).get(url);
             log.info("日期 {} 页码 {} {}", date, 1, resp);
             ObjectMapper mapper = new ObjectMapper();
             Response response = mapper.readValue(resp, Response.class);

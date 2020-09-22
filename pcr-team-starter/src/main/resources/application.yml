@@ -30,7 +30,7 @@ pcr:
 task:
   # 自动报刀
   notify:
-    cron: 0 1/5 * * * ? # 01分开始,5分钟执行一次   0 1/5 * * * ?
+    cron: 0/30 * * * * ? # 01分开始,5分钟执行一次   0 1/5 * * * ?
     msg: |+
       【{gameNickname}】对【{bossName}】造成了【{damage}】伤害！
       {attackTime}：当前第{attackNum}刀{isReimburse}，{lapNum}周目{bossNum}王{bossStateTip}
