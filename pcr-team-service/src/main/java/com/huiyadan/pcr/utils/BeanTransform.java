@@ -7,6 +7,7 @@ import com.huiyadan.pcr.dao.model.DamageEntity;
 import com.huiyadan.pcr.dao.model.DamageHistoryEntity;
 import com.huiyadan.pcr.tool.BossInfo;
 import com.huiyadan.pcr.tool.ScoreCalculator;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -51,8 +52,8 @@ public class BeanTransform {
         entity.setLapNum(damage.getLap_num());
 //        entity.setGameId();  // TODO 工会成员配置
         entity.setGameNickname(member.getName());
-        entity.setBossNum(BossInfo.getIndex(stage, damage.getBoss_name()));
-        entity.setBossName(damage.getBoss_name());
+        entity.setBossName(StringUtils.trimToEmpty(damage.getBoss_name()));
+        entity.setBossNum(BossInfo.getIndex(stage, entity.getBossName()));
         entity.setDamage(damage.getDamage());
         entity.setScore(ScoreCalculator.compute(damage.getLap_num(), entity.getBossNum(), damage.getDamage()));
         entity.setKilled(damage.getKill());
