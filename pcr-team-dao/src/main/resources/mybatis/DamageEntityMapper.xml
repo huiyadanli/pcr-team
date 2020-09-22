@@ -30,7 +30,8 @@
 
     <select id="sumDamage" resultType="java.lang.Integer">
         select sum(damage) from damage
-        where lap_num = #{lapNum}
+        where stage = #{stage}
+        and lap_num = #{lapNum}
         and boss_num = #{bossNum}
         and attack_time &lt;= #{attackTime}
     </select>

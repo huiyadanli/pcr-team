@@ -25,7 +25,7 @@ public class DayReportFetcher {
     @Value("${bigfun.cookies}")
     private String cookies;
 
-    private final static String URL = "https://www.bigfun.cn/api/feweb?target=gzlj-clan-day-report%2Fa&date={0}&page={1}";
+    private final static String URL = "https://www.bigfun.cn/api/feweb?target=gzlj-clan-day-report%2Fa&date={0}&page={1}&size=30";
 
     /**
      * @param date 2020-08-26
@@ -35,22 +35,20 @@ public class DayReportFetcher {
         List<Member> members = new ArrayList<>();
 
         // 多页 上限4页
-        for (int i = 1; i < 5; i++) {
-            try {
-                String url = MessageFormat.format(URL, date, i);
-                String resp = BigfunRequests.cookie(cookies).get(url);
-                log.info("日期 {} 页码 {} {}", date, i, resp);
-                ObjectMapper mapper = new ObjectMapper();
-                Response response = mapper.readValue(resp, Response.class);
-                if (response != null && CollectionUtils.isNotEmpty(response.getData())) {
-                    members.addAll(response.getData());
-                } else {
-                    break;
-                }
-            } catch (Exception e) {
-                log.error("从bigfun获取工会日表时异常", e);
+//        for (int i = 1; i < 5; i++) {
+        try {
+            String url = MessageFormat.format(URL, date, 1);
+            String resp = BigfunRequests.cookie(cookies).get(url);
+            log.info("日期 {} 页码 {} {}", date, 1, resp);
+            ObjectMapper mapper = new ObjectMapper();
+            Response response = mapper.readValue(resp, Response.class);
+            if (response != null && CollectionUtils.isNotEmpty(response.getData())) {
+                members.addAll(response.getData());
             }
+        } catch (Exception e) {
+            log.error("从bigfun获取工会日表时异常", e);
         }
+//        }
         return members;
     }
 }

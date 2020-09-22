@@ -41,6 +41,7 @@ public class BigfunRequests {
         headers.put("Referer", "https://www.bigfun.cn/tools/pcrteam/d_report");
         headers.put("Accept-Encoding", "gzip, deflate, br");
         headers.put("Accept-Language", "zh-CN,zh;q=0.9,en;q=0.8");
+        headers.put("x-csrf-token", "mAfICY88-uxw-Wn5nIrjblMHD9GiI4jjB1bo");
         INSTANCE.setHeaders(headers);
         return INSTANCE;
     }
