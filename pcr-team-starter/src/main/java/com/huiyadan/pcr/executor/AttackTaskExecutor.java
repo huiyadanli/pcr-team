@@ -4,6 +4,7 @@ import com.huiyadan.pcr.dao.model.DamageEntity;
 import com.huiyadan.pcr.service.DayReportService;
 import com.huiyadan.pcr.tool.BossInfo;
 import com.huiyadan.pcr.tool.GuildMemberInfo;
+import com.huiyadan.pcr.utils.PcrDateUtils;
 import lombok.extern.slf4j.Slf4j;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.contact.ContactList;
@@ -56,8 +57,7 @@ public class AttackTaskExecutor {
      */
     public void urge(Group group) {
         // 获取当天日期
-        Date today = DateUtils.truncate(new Date(), Calendar.DAY_OF_MONTH);
-        String dateStr = FastDateFormat.getInstance("yyyy-MM-dd").format(today);
+        String dateStr = PcrDateUtils.getTodayStr();
 //        dateStr = "2020-08-29"; // test code
         Map<String, Double> map = dayReportService.getAllMemberAttackNum(dateStr);
         // 未出完刀的
