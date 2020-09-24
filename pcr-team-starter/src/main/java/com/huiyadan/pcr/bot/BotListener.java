@@ -66,7 +66,7 @@ public class BotListener extends SimpleListenerHost {
                 }
             } else if (msgString.equals("状态")) {
                 attackTaskExecutor.printBossStatus(event.getGroup());
-            } else if (msgString.contains("出刀情况")) {
+            } else if (msgString.contains("出刀情况") || msgString.contains("出刀统计") || msgString.contains("出刀状态")) {
                 attackTaskExecutor.printAttackNumStatus(event.getGroup());
             } else if (msgString.equals("催刀")) {
                 attackTaskExecutor.urge(event.getGroup());
