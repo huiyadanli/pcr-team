@@ -1,0 +1,56 @@
+# mybatis
+spring:
+  datasource:
+    driver-class-name: org.sqlite.JDBC
+    url: jdbc:sqlite:.\db\data.db
+    username:
+    password:
+
+mybatis:
+  mapper-locations: classpath:mybatis/*xml
+
+# 日志配置
+logging:
+  level:
+    root: INFO
+    com.huiyadan.pcr.dao.mapper: DEBUG
+  file:
+    name: .\log\pcr-team.log
+
+# 私有配置路径
+secrets:
+  path: .\config\secrets.yml
+
+# 游戏相关配置
+pcr:
+  battle-stage: 6 # ！第几期会战
+  battle-start-date: 2020-09-22  # ！会战开始时间  2020-09-22
+  battle-days: 6 # 会战持续时间(天)
+  # ！boss 数据
+  boss-info: '{"stages":[{"stage":5,"bossNames":["双足飞龙","野性狮鹫","雷电","狂乱魔熊","炎吼狮王"]},{"stage":6,"bossNames":["双足飞龙","野性狮鹫","幽灵领主","独眼巨人","美杜莎"]}]}'
+  member-info-path: .\db\members.mine.csv
+
+# 定时任务配置
+task:
+  # 自动报刀
+  notify:
+    # 推荐参数：01分开始,每5分钟20秒/35秒/50秒分别执行一次（20/15 0/5 * * * ?），因为 bigfun 是00分、05分更新的数据
+    cron: 20/15 0/5 * * * ?
+    # 报刀消息模板
+    msg: |+
+      【{gameNickname}】对【{bossName}】造成了【{damage}】伤害！
+      {attackTime}：当前第{attackNum}刀{isReimburse}，{lapNum}周目{bossNum}王{bossStateTip}
+  # 自动催刀
+  urge:
+    cron: 0 10 22,23,0 * * ? # 22、23、24点   0 10 22,23,0 * * ?
+
+
+# 动漫图片 api
+extend:
+  picture:
+    path: /image/
+    apis: >
+      https://api.dongmanxingkong.com/suijitupian/acg/1080p/index.php,
+      http://www.dmoe.cc/random.php,
+      https://api.ixiaowai.cn/api/api.php
+#      https://api.mmcee.cn/acgimg/acgurl.php

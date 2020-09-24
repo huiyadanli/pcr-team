@@ -9,6 +9,7 @@
         <module>pcr-team-starter</module>
         <module>pcr-team-analysis</module>
         <module>pcr-team-spider</module>
+        <module>pcr-team-distribution</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
