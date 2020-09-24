@@ -16,7 +16,7 @@
 ### 环境要求
 
   * JDK 1.8 或者 JRE 1.8
-  * Windows 或 Linux 都可以使用
+  * Windows 或 Linux 都可以使用（QQ机器人需要挂一段时间，才不会被风控，所以建议使用 Windows 服务器）
 
 ### 配置
 
