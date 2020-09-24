@@ -13,15 +13,11 @@ import net.mamoe.mirai.contact.Member;
 import net.mamoe.mirai.message.data.At;
 import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.MessageUtils;
-import org.apache.commons.lang3.time.DateUtils;
-import org.apache.commons.lang3.time.FastDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.text.MessageFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -113,7 +109,7 @@ public class AttackTaskExecutor {
 
     public void printAttackNumStatus(Group group) {
         // 获取所有出刀情况
-        String dateStr = FastDateFormat.getInstance("yyyy-MM-dd").format(DateUtils.truncate(new Date(), Calendar.DAY_OF_MONTH));
+        String dateStr = PcrDateUtils.getTodayStr();
 //        dateStr = "2020-08-29"; // test code
         Map<String, Double> map = dayReportService.getAllMemberAttackNum(dateStr);
         int sum = 0;
