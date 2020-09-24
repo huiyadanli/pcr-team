@@ -13,7 +13,7 @@
 
 ### 下载
 
-[点击下载最新release版本]()
+[点击下载最新release版本](https://github.com/huiyadanli/pcr-team/releases)
 
 ### 环境要求
 
