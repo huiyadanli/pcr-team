@@ -13,7 +13,7 @@
 
 ### 下载
 
-[点击下载最新release版本](https://github.com/huiyadanli/pcr-team/releases)
+[点此进入最新release版本的下载页面](https://github.com/huiyadanli/pcr-team/releases)
 
 ### 环境要求
 
@@ -22,9 +22,9 @@
 
 ### 配置
 
-1. 使用前要先修改 `config\secrets.yml` 的各类配置（内有注释）。[不知道如何获取bigfun的cookie的请点这里。](https://github.com/huiyadanli/pcr-team/wiki/%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96bigfun%E7%9A%84cookies%E5%92%8C%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0)
-
-⚠️ 请不要泄露 `secrets.yml` 配置文件给其他人，里面都是账号相关的敏感信息，bigfun cookie 的泄露可能会牵连B站账号。
+1. 使用前要先修改 `config\secrets.yml` 的各类配置（内有注释）。
+    - [不知道如何获取bigfun的cookie的请点这里。](https://github.com/huiyadanli/pcr-team/wiki/%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96bigfun%E7%9A%84cookies%E5%92%8C%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0)
+    - ⚠️ 请不要泄露 `secrets.yml` 配置文件给其他人，里面都是账号相关的敏感信息，bigfun cookie 的泄露可能会牵连B站账号。
 
 2. `config\application.yml` 保持默认配置即可，当然也可以根据注释进行适当修改。
 
