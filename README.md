@@ -22,15 +22,15 @@
 
 ### 配置
 
-使用前要先修改 `config\secrets.yml` 的各类配置（内有注释）；
+1. 使用前要先修改 `config\secrets.yml` 的各类配置（内有注释）。[不知道如何获取bigfun的cookie的请点这里。](https://github.com/huiyadanli/pcr-team/wiki/%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96bigfun%E7%9A%84cookies%E5%92%8C%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0)
 
 ⚠️ 请不要泄露 `secrets.yml` 配置文件给其他人，里面都是账号相关的敏感信息，bigfun cookie 的泄露可能会牵连B站账号。
 
-`config\application.yml` 保持默认配置即可，当然也可以根据注释进行适当修改。
+2. `config\application.yml` 保持默认配置即可，当然也可以根据注释进行适当修改。
 
-催刀功能需要有公会所有成员游戏昵称和QQ号的列表，如果要使用此功能，请把公会所有成员QQ号对应游戏昵称的关系写入 `db\members.csv` 。
+3. 催刀功能需要有公会所有成员游戏昵称和QQ号的列表，如果要使用此功能，请把公会所有成员QQ号对应游戏昵称的关系写入 `db\members.csv` 。
 
-所有出刀数据都会保存在 `db\data.db`
+4. 所有出刀数据都会保存在 `db\data.db`
 
 ### 启动
 
