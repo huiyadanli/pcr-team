@@ -6,9 +6,9 @@ import com.huiyadan.pcr.dao.mapper.DamageEntityMapper;
 import com.huiyadan.pcr.dao.model.DamageEntity;
 import com.huiyadan.pcr.tool.BossInfo;
 import com.huiyadan.pcr.utils.BeanTransform;
+import com.huiyadan.pcr.utils.PcrDateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.weekend.WeekendSqls;
 
-import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -48,6 +47,7 @@ public class DayReportService {
 
     /**
      * 查询最近一次伤害
+     *
      * @return
      */
     public DamageEntity getLatesttDamageEntity() {
@@ -153,7 +153,7 @@ public class DayReportService {
     public List<DamageEntity> add(Date date) {
         // 日期在会战期间的校验
         String dateStr = FastDateFormat.getInstance("yyyy-MM-dd").format(date);
-        if (!isInTeamWar(date)) {
+        if (!PcrDateUtils.isInClanBattle(date)) {
             log.error("{} 不在公会战期间", dateStr);
             return null;
         }
@@ -251,19 +251,5 @@ public class DayReportService {
                 && fromWeb.getAttackTime().equals(fromDatabase.getAttackTime());
     }
 
-    private boolean isInTeamWar(Date date) {
-        try {
-            Date start = DateUtils.parseDate(startDate, "yyyy-MM-dd");
-            Date end = DateUtils.addDays(start, days);
-            if (date.getTime() >= start.getTime() && date.getTime() <= end.getTime()) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (ParseException e) {
-            log.error("日期转换失败", e);
-            return false;
-        }
-    }
 
 }

@@ -54,7 +54,11 @@ public class AttackTaskExecutor {
     public void urge(Group group) {
         // 获取当天日期
         String dateStr = PcrDateUtils.getTodayStr();
-//        dateStr = "2020-08-29"; // test code
+        //        dateStr = "2020-08-29"; // test code
+        if (!PcrDateUtils.isInClanBattle(PcrDateUtils.getToday())) {
+            log.error("{} 不在公会战期间", dateStr);
+            return;
+        }
         Map<String, Double> map = dayReportService.getAllMemberAttackNum(dateStr);
         // 未出完刀的
         Map<String, Double> incomplete = new HashMap<>();
