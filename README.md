@@ -7,11 +7,13 @@
 
 由于内嵌 `mirai-core` 会需要一堆 kotlin 的包，我也使用了一堆框架增加开发效率（Spring 全家桶、Mybatis 等），导致程序的打包体积非常大。
 
-当前只支持单个公会单个群内的自动报刀、催刀、boss状态查询，所有数据来源于 `bigfun`，每5分钟更新一次。
-
-**本程序没有正式打包发布，推荐有 Java 编程基础的人自行编译打包修改使用。（当前已经能够稳定运行并报刀）**
+当前只支持单个公会单个群内的自动报刀、催刀、boss状态查询等功能，所有数据来源于 `bigfun`，每5分钟更新一次。
 
 ## 使用说明
+
+### 下载
+
+[点此进入最新release版本的下载页面](https://github.com/huiyadanli/pcr-team/releases)
 
 ### 环境要求
 
@@ -20,21 +22,27 @@
 
 ### 配置
 
-使用前要先修改 `application.yml` 和 `secrets.yml` 的各类配置（内有注释）。
+1. 使用前要先修改 `config\secrets.yml` 的各类配置（内有注释）。
+    - [不知道如何获取bigfun的cookie的请点这里。](https://github.com/huiyadanli/pcr-team/wiki/%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96bigfun%E7%9A%84cookies%E5%92%8C%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0)
+    - ⚠️ 请不要泄露 `secrets.yml` 配置文件给其他人，里面都是账号相关的敏感信息，bigfun cookie 的泄露可能会牵连B站账号。
 
-⚠️ 请不要泄露 `secrets.yml` 中的任何配置给其他人，里面都是账号相关的敏感信息。bigfun cookie 的泄露可能会牵连B站账号。
+2. `config\application.yml` 保持默认配置即可，当然也可以根据注释进行适当修改。
 
-催刀功能需要有公会所有成员游戏昵称和QQ号的列表，如果要使用此功能，请把公会所有成员QQ号对应游戏昵称的关系写入 `members.csv` 。
+3. 催刀功能需要有公会所有成员游戏昵称和QQ号的列表，如果要使用此功能，请把公会所有成员QQ号对应游戏昵称的关系写入 `db\members.csv` 。
 
-所有出刀数据都会保存在 `data.db`
+4. 所有出刀数据都会保存在 `db\data.db`
 
 ### 启动
 
-Windows 使用 CMD 或 PowerShell 执行 `java -jar pcr-team.jar`。
+Windows 下直接双击 `start.bat`即可（也可以使用 CMD 或 PowerShell 在当前文件夹下执行 `java -jar pcr-team.jar`）。
 
 Linux 执行 `java -jar pcr-team.jar &`，加 `&` 是为了在后台运行。
 
+如果出现内存不够的情况可以自行添加 JVM 参数调整启动内存。
+
 ## 可用指令
+
+群内发送以下消息可以触发操作：
 
 - 状态
     - 显示当前boss状态（周目、血量）
