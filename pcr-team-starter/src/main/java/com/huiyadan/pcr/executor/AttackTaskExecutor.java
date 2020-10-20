@@ -3,7 +3,7 @@ package com.huiyadan.pcr.executor;
 import com.huiyadan.pcr.dao.model.DamageEntity;
 import com.huiyadan.pcr.service.DayReportService;
 import com.huiyadan.pcr.tool.BossInfo;
-import com.huiyadan.pcr.tool.GuildMemberInfo;
+import com.huiyadan.pcr.tool.ClanMemberInfo;
 import com.huiyadan.pcr.utils.PcrDateUtils;
 import lombok.extern.slf4j.Slf4j;
 import net.mamoe.mirai.Bot;
@@ -62,7 +62,7 @@ public class AttackTaskExecutor {
         Map<String, Double> map = dayReportService.getAllMemberAttackNum(dateStr);
         // 未出完刀的
         Map<String, Double> incomplete = new HashMap<>();
-        for (String nickname : GuildMemberInfo.getAllGameNicknames()) {
+        for (String nickname : ClanMemberInfo.getAllGameNicknames()) {
             Double d = map.get(nickname);
             if (d == null) {
                 incomplete.put(nickname, 0.0);
@@ -76,7 +76,7 @@ public class AttackTaskExecutor {
             MessageChain chain = MessageUtils.newChain("当前未出刀情况：\n");
             for (Map.Entry<String, Double> entry : incomplete.entrySet()) {
                 // 游戏昵称与QQ号的映射 GuildMemberInfo.getQQByGameNickname
-                Long qqId = GuildMemberInfo.getQQByGameNickname(entry.getKey());
+                Long qqId = ClanMemberInfo.getQQByGameNickname(entry.getKey());
                 if (qqId != null) {
                     chain = chain.plus(new At(groupMembers.get(qqId))).plus(attackStatusMsg(3 - entry.getValue()));
                 } else {
