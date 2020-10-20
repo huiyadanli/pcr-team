@@ -3,14 +3,21 @@ package com.huiyadan.pcr.tool;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableBiMap;
+import com.huiyadan.pcr.api.bigfun.boss.BossReportFetcher;
+import com.huiyadan.pcr.api.bigfun.boss.model.BossNameInfo;
 import com.huiyadan.pcr.tool.boss.AllStages;
 import com.huiyadan.pcr.tool.boss.StageBossInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author huiyadanli
@@ -39,17 +46,48 @@ public class BossInfo {
     @Value("${pcr.battle-stage}")
     private Integer battleStage;
 
+    @Autowired
+    private BossReportFetcher bossReportFetcher;
+
     /**
      * 解析配置文件中的 json 配置
      */
     @PostConstruct
     public void init() {
+        // 先从bigfun尝试获取boss数据
         try {
-            all = new ObjectMapper().readValue(bossInfoJson, AllStages.class);
-            currStage = battleStage;
-        } catch (JsonProcessingException e) {
-            log.error("解析boss信息配置(pcr.boss-info)失败", e);
+            List<BossNameInfo> bossNameInfoList = bossReportFetcher.getBossInfo();
+            all = toAllStagesBossInfo(bossNameInfoList);
+        } catch (Exception e) {
+            log.error("从bigfun获取boss信息失败", e);
         }
+
+        if(all == null) {
+            try {
+                all = new ObjectMapper().readValue(bossInfoJson, AllStages.class);
+                currStage = battleStage;
+            } catch (JsonProcessingException e) {
+                log.error("解析boss信息配置(pcr.boss-info)失败", e);
+            }
+        }
+
+    }
+
+    private AllStages toAllStagesBossInfo(List<BossNameInfo> bossNameInfoList) {
+        if(CollectionUtils.isEmpty(bossNameInfoList)) {
+            return null;
+        }
+        List<String> names = bossNameInfoList.stream().map(BossNameInfo::getBoss_name).collect(Collectors.toList());
+        AllStages allStages = new AllStages();
+        StageBossInfo stageBossInfo = new StageBossInfo();
+        stageBossInfo.setStage(Integer.parseInt(StringUtils.substring(bossNameInfoList.get(0).getId(),0,1)));
+        if(stageBossInfo.getStage() == null) {
+            stageBossInfo.setStage(battleStage);
+        }
+        currStage = stageBossInfo.getStage();
+        stageBossInfo.setBossNames(names);
+        allStages.getStages().add(stageBossInfo);
+        return allStages;
     }
 
     /**

@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * @author lihh
+ * @author huiyadanli
  */
 public class NicknamesSql {
 
